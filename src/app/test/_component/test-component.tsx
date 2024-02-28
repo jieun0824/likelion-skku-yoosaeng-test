@@ -51,9 +51,9 @@ export default function TestComponent({
         mutateTF(TF + 1); //T 추가
       }
     }
-    setTimeout(() => {
+    setTimeout(async () => {
       if (currentStep === 8) {
-        router.push("/result/1");
+        await judgeResult().then((result) => router.push(`/result/${result}`));
       } else {
         //마지막 step 이 아니면
         setButtonNumber(null);
@@ -61,6 +61,48 @@ export default function TestComponent({
         setStep(step + 1); //for rendering
       }
     }, 300);
+  };
+
+  const judgeResult = async () => {
+    return new Promise((resolve) => {
+      let result = "";
+      if (EI >= 2) {
+        result += "E";
+      } else {
+        result += "I";
+      }
+      if (NS >= 2) {
+        result += "S";
+      } else {
+        result += "N";
+      }
+      if (TF >= 2) {
+        result += "T";
+      } else {
+        result += "F";
+      }
+
+      switch (result) {
+        case "IST":
+          resolve("YHWEF");
+        case "ISF":
+          resolve("KGWED");
+        case "INF":
+          resolve("TNWEM");
+        case "INT":
+          resolve("NFJWE");
+        case "EST":
+          resolve("AGEMW");
+        case "ESF":
+          resolve("BWEKD");
+        case "ENF":
+          resolve("PWEMG");
+        case "ENT":
+          resolve("GQEWG");
+        default:
+          resolve(result);
+      }
+    });
   };
 
   const BackHandler = () => {
