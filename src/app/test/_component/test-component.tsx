@@ -23,7 +23,7 @@ export default function TestComponent({
 
   const [currentStep, mutateCurrentStep] = useSWRCurrentStep();
   const [step, setStep] = useState(currentStep);
-  //이전 선지 기억(이전 버튼 클릭 시 이전 선지 삭제)
+  //모든 선지 기억(이전 버튼 클릭 시 이전 선지 삭제)
   const [prevButtonNumber, setPrevButtonNumber] = useSWRPrevButton();
   //현재 선지 버튼
   const [buttonNumber, setButtonNumber] = useState<answerType>(null);
@@ -39,8 +39,8 @@ export default function TestComponent({
     if (buttonNumber == null) {
       return;
     } //뒤로 넘어가지 않음
-    setPrevButtonNumber(buttonNumber); //이전 선지로 저장
-    if (prevButtonNumber === 1) {
+    setPrevButtonNumber({ ...prevButtonNumber, [step]: buttonNumber }); //이전 선지로 저장
+    if (buttonNumber === 1) {
       if ([0, 4, 7].includes(step)) {
         mutateEI(EI + 1); //E 추가
       } else if ([1, 3, 8].includes(step)) {
@@ -58,6 +58,24 @@ export default function TestComponent({
         mutateCurrentStep(currentStep + 1); //다음스텝으로 변경
         setStep(step + 1); //for rendering
       }
+    }, 300);
+  };
+
+  const BackHandler = () => {
+    setTimeout(() => {
+      mutateCurrentStep(currentStep - 1); //이전스텝으로 변경
+      if (prevButtonNumber[currentStep] === 1) {
+        if ([0, 4, 7].includes(step)) {
+          mutateEI(EI - 1); //E 삭제
+        } else if ([1, 3, 8].includes(step)) {
+          mutateNS(NS - 1); //S REMOVE
+        } else if ([2, 5, 6].includes(step)) {
+          mutateTF(TF - 1); //T REMOVE
+        }
+      }
+      setButtonNumber(null);
+      setPrevButtonNumber({ ...prevButtonNumber, [step]: null });
+      setStep(step - 1); //for rendering
     }, 300);
   };
   return (
@@ -84,6 +102,7 @@ export default function TestComponent({
           className={`bg-pointColor hover:bg-pointColor/40 ${
             step === 0 && "hidden"
           }`}
+          onClick={BackHandler}
         >
           이전
         </Button>

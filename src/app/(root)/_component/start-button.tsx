@@ -25,7 +25,17 @@ export default function StartButton() {
             mutateNS(0);
             mutateTF(0);
             mutateCurrentStep(0);
-            setPrevButtonNumber(0);
+            setPrevButtonNumber({
+              0: null,
+              1: null,
+              2: null,
+              3: null,
+              4: null,
+              5: null,
+              6: null,
+              7: null,
+              8: null,
+            });
           }, 0);
         }}
       >
