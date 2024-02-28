@@ -10,14 +10,12 @@ const config = {
   ],
   prefix: "",
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
+      screens: {
+        smallMobile: { max: "375px" }, //for low resolution tablets, mobiles
+        mobile: { min: "376px", max: "768px" }, //for low resolution laptops
+        desktop: { min: "769px" },
+      },
       colors: {
         pointColor: "#8dc53f",
         bgColor: "#1E1E1E",

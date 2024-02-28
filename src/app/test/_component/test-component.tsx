@@ -15,7 +15,7 @@ type answerType = null | number;
 export default function TestComponent({
   data,
 }: {
-  data: { [key: string]: { question: string; answer: string[] } };
+  data: { id: string; question: string; answer: string[] }[];
 }) {
   const [TF, mutateTF] = useSWRTF();
   const [NS, mutateNS] = useSWRNS();
@@ -23,6 +23,8 @@ export default function TestComponent({
 
   const [currentStep, mutateCurrentStep] = useSWRCurrentStep();
   const [step, setStep] = useState(currentStep);
+  const newQuestion = data[step].question.split("\n");
+
   //모든 선지 기억(이전 버튼 클릭 시 이전 선지 삭제)
   const [prevButtonNumber, setPrevButtonNumber] = useSWRPrevButton();
   //현재 선지 버튼
@@ -81,21 +83,33 @@ export default function TestComponent({
   return (
     <div className="flex flex-col gap-6">
       <div className="progressBar text-center">
-        {step + 1}/{data.length}
+        <Progress value={(step + 1) * 10} />
+        <p className="mt-4">
+          {step + 1}/{data.length}
+        </p>
       </div>
-      <div className="question">{data[step].question}</div>
+      <div className="question whitespace-normal text-center">
+        {newQuestion.map((el, i) => {
+          return <p key={i}>{el}</p>;
+        })}
+      </div>
       <div className="answer flex flex-col gap-2">
-        {data[step].answer.map((answer, index) => (
-          <Button
-            key={index}
-            onClick={() => BtnClickHandler(index + 1)}
-            className={`border-pointColor border bg-bgColor hover:bg-pointColor/40 ${
-              buttonNumber === index + 1 && "bg-pointColor/40"
-            } p-8`}
-          >
-            {answer}
-          </Button>
-        ))}
+        {data[step].answer.map((answer, index) => {
+          const newAnswer = answer.split(`\n`);
+          return (
+            <Button
+              key={index}
+              onClick={() => BtnClickHandler(index + 1)}
+              className={`border-pointColor border flex-col h-auto whitespace-normal bg-bgColor hover:bg-pointColor/40 ${
+                buttonNumber === index + 1 && "bg-pointColor/40"
+              } px-4 py-3`}
+            >
+              {newAnswer.map((el, i) => {
+                return <p key={i}>{el}</p>;
+              })}
+            </Button>
+          );
+        })}
       </div>
       <div className="Button flex justify-evenly">
         <Button
