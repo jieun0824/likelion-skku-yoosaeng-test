@@ -8,6 +8,8 @@ import {
 import "./globals.css";
 import Footer from "@/components/footer";
 import { cls } from "@/lib/utils";
+import Script from "next/script";
+import KakaoScript from "@/lib/KaKaoScript";
 
 const inter = Noto_Sans_KR({ weight: ["400", "700"], subsets: ["latin"] });
 const diphylleia = Diphylleia({
@@ -25,6 +27,12 @@ export const metadata: Metadata = {
   description: "내가 유생이었다면?",
 };
 
+declare global {
+  interface Window {
+    Kakao: any;
+  }
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,6 +45,7 @@ export default function RootLayout({
       >
         {children}
       </body>
+      <KakaoScript />
     </html>
   );
 }
