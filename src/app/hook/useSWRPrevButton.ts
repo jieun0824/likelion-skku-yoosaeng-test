@@ -19,9 +19,5 @@ export default function useSWRPrevButton() {
     }
   );
 
-  useEffect(() => {
-    console.log(prevButton);
-  }, [prevButton]);
-
   return [prevButton, mutatePrevButton];
 }

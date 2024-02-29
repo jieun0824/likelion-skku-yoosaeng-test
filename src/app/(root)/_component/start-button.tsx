@@ -38,6 +38,7 @@ export default function StartButton() {
               6: null,
               7: null,
               8: null,
+              9: null,
             });
           }, 0);
         }}
