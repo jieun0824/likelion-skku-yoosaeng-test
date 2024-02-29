@@ -9,17 +9,19 @@ import useSWRPrevButton from "@/app/hook/useSWRPrevButton";
 import useSWRTF from "@/app/hook/useSWRTF";
 import useSWRNS from "@/app/hook/useSWRNS";
 import useSWREI from "@/app/hook/useSWREI";
+import useSWRGender, { GenderType } from "@/app/hook/useSWRGender";
 
 type answerType = null | number;
 
 export default function TestComponent({
   data,
 }: {
-  data: { id: string; question: string; answer: string[] }[];
+  data: { id: number; question: string; answer: string[] }[];
 }) {
   const [TF, mutateTF] = useSWRTF();
   const [NS, mutateNS] = useSWRNS();
   const [EI, mutateEI] = useSWREI();
+  const [gender, mutateGender] = useSWRGender();
 
   const [currentStep, mutateCurrentStep] = useSWRCurrentStep();
   const [step, setStep] = useState(currentStep);
@@ -43,16 +45,18 @@ export default function TestComponent({
     } //뒤로 넘어가지 않음
     setPrevButtonNumber({ ...prevButtonNumber, [step]: buttonNumber }); //이전 선지로 저장
     if (buttonNumber === 1) {
-      if ([0, 4, 7].includes(step)) {
+      if ([1, 5, 8].includes(step)) {
         mutateEI(EI + 1); //E 추가
-      } else if ([1, 3, 8].includes(step)) {
+      } else if ([2, 4, 9].includes(step)) {
         mutateNS(NS + 1); //S 추가
-      } else if ([2, 5, 6].includes(step)) {
+      } else if ([3, 6, 7].includes(step)) {
         mutateTF(TF + 1); //T 추가
+      } else if (step == 0) {
+        mutateGender(GenderType.male);
       }
     }
     setTimeout(async () => {
-      if (currentStep === 8) {
+      if (currentStep === data.length - 1) {
         await judgeResult().then((result) => router.push(`/result/${result}`));
       } else {
         //마지막 step 이 아니면
@@ -109,12 +113,14 @@ export default function TestComponent({
     setTimeout(() => {
       mutateCurrentStep(currentStep - 1); //이전스텝으로 변경
       if (prevButtonNumber[currentStep] === 1) {
-        if ([0, 4, 7].includes(step)) {
+        if ([1, 5, 8].includes(step)) {
           mutateEI(EI - 1); //E 삭제
-        } else if ([1, 3, 8].includes(step)) {
+        } else if ([2, 4, 9].includes(step)) {
           mutateNS(NS - 1); //S REMOVE
-        } else if ([2, 5, 6].includes(step)) {
+        } else if ([3, 6, 7].includes(step)) {
           mutateTF(TF - 1); //T REMOVE
+        } else if (step == 0) {
+          mutateGender(0);
         }
       }
       setButtonNumber(null);
@@ -125,7 +131,7 @@ export default function TestComponent({
   return (
     <div className="flex flex-col gap-6">
       <div className="progressBar text-center">
-        <Progress value={(step + 1) * 10} />
+        <Progress value={((step + 1) / data.length) * 100} />
         <p className="mt-4">
           {step + 1}/{data.length}
         </p>

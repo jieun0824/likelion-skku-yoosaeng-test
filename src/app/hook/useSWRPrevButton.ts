@@ -14,6 +14,7 @@ export default function useSWRPrevButton() {
         6: null,
         7: null,
         8: null,
+        9: null,
       },
     }
   );

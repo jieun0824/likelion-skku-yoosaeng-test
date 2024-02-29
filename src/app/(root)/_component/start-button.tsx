@@ -2,6 +2,7 @@
 
 import useSWRCurrentStep from "@/app/hook/useSWRCurrenStep";
 import useSWREI from "@/app/hook/useSWREI";
+import useSWRGender from "@/app/hook/useSWRGender";
 import useSWRNS from "@/app/hook/useSWRNS";
 import useSWRPrevButton from "@/app/hook/useSWRPrevButton";
 import useSWRTF from "@/app/hook/useSWRTF";
@@ -13,6 +14,7 @@ export default function StartButton() {
   const [TF, mutateTF] = useSWRTF();
   const [NS, mutateNS] = useSWRNS();
   const [EI, mutateEI] = useSWREI();
+  const [gender, mutateGender] = useSWRGender();
   const [currentStep, mutateCurrentStep] = useSWRCurrentStep();
   const [prevButtonNumber, setPrevButtonNumber] = useSWRPrevButton();
   return (
@@ -25,6 +27,7 @@ export default function StartButton() {
             mutateNS(0);
             mutateTF(0);
             mutateCurrentStep(0);
+            mutateGender(null);
             setPrevButtonNumber({
               0: null,
               1: null,

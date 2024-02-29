@@ -1,4 +1,5 @@
 "use client";
+import useSWRGender from "@/app/hook/useSWRGender";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useEffect } from "react";
@@ -63,10 +64,16 @@ function KaKaoBtn({
 export default function ResultComponent({
   data,
 }: {
-  data: { param: string; title: string; description: string; imageUrl: string };
+  data: {
+    param: string;
+    title: string;
+    description: string;
+    imageUrl: string[];
+  };
 }) {
   const title = data.title.split("\n");
   const description = data.description.split("\n");
+  const [gender, mutateGender] = useSWRGender();
   return (
     <div className="flex flex-col justify-center items-center gap-14  ">
       <div className="text-xl text-center">나는 과거에 어떤 유생이었을까?</div>
@@ -85,7 +92,7 @@ export default function ResultComponent({
             ))}
           </div>
           <Image
-            src={`/result/${data.param}.png`}
+            src={data.imageUrl[gender]}
             alt={data.param}
             width={300}
             height={300}
@@ -100,7 +107,7 @@ export default function ResultComponent({
       <KaKaoBtn
         param={data.param}
         item={title[title.length - 1]}
-        imageUrl={data.imageUrl}
+        imageUrl={data.imageUrl[gender]}
       />
     </div>
   );

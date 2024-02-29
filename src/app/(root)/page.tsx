@@ -15,7 +15,6 @@ export default function MainPage() {
         alt="lion"
         width={300}
         height={300}
-        placeholder="blur"
         className="border-none"
       />
       <StartButton />
