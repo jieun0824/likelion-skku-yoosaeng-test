@@ -1,10 +1,25 @@
 import type { Metadata } from "next";
-import { Nanum_Gothic } from "next/font/google";
+import {
+  Nanum_Gothic,
+  Diphylleia,
+  Noto_Sans_KR,
+  Bagel_Fat_One,
+} from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/footer";
+import { cls } from "@/lib/utils";
 
-const inter = Nanum_Gothic({ weight: ["400", "700"], subsets: ["latin"] });
-
+const inter = Noto_Sans_KR({ weight: ["400", "700"], subsets: ["latin"] });
+const diphylleia = Diphylleia({
+  weight: ["400"],
+  subsets: ["latin"],
+  variable: "--font-diphylleia",
+});
+const Bagel = Bagel_Fat_One({
+  weight: ["400"],
+  subsets: ["latin"],
+  variable: "--font-bagel",
+});
 export const metadata: Metadata = {
   title: "유생 테스트",
   description: "내가 유생이었다면?",
@@ -17,7 +32,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={cls(inter.className, diphylleia.variable, Bagel.variable)}
+      >
+        {children}
+      </body>
     </html>
   );
 }

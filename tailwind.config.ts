@@ -11,6 +11,10 @@ const config = {
   prefix: "",
   theme: {
     extend: {
+      fontFamily: {
+        diphylleia: ["var(--font-diphylleia)"],
+        bagel: ["var(--font-bagel)"],
+      },
       screens: {
         smallMobile: { max: "375px" }, //for low resolution tablets, mobiles
         mobile: { min: "376px", max: "768px" }, //for low resolution laptops
