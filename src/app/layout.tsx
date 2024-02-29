@@ -41,7 +41,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cls(inter.className, diphylleia.variable, Bagel.variable)}
+        className={cls(
+          inter.className,
+          diphylleia.variable,
+          Bagel.variable,
+          "bg-bgColor text-white"
+        )}
       >
         {children}
       </body>
