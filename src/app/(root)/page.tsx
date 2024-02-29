@@ -10,7 +10,14 @@ export default function MainPage() {
         혹시 내가 전생에도 성균관대 유생?
       </h1>
       <h3>나는 어떤 유생이었을까?</h3>
-      <Image src="/image/lion.png" alt="lion" width={300} height={300} />
+      <Image
+        src="/image/lion.png"
+        alt="lion"
+        width={300}
+        height={300}
+        placeholder="blur"
+        className="border-none"
+      />
       <StartButton />
     </div>
   );

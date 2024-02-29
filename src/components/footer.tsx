@@ -11,6 +11,8 @@ export default function Footer() {
           alt="instagram"
           width={50}
           height={30}
+          placeholder="blur"
+          className="border-none"
         />
       </Link>
     </div>
