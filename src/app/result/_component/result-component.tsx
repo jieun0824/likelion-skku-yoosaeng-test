@@ -96,7 +96,6 @@ export default function ResultComponent({
             alt={data.param}
             width={300}
             height={300}
-            priority={true}
           />
           <div className="font-diphylleia">
             {description.map((description, index) => (
