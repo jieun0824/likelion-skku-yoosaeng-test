@@ -54,6 +54,8 @@ export default function TestComponent({
       } else if (step == 0) {
         mutateGender(GenderType.male);
       }
+    } else if (buttonNumber === 2 && step === 0) {
+      mutateGender(GenderType.female);
     }
     setTimeout(async () => {
       if (currentStep === data.length - 1) {
@@ -120,7 +122,7 @@ export default function TestComponent({
         } else if ([3, 6, 7].includes(step)) {
           mutateTF(TF - 1); //T REMOVE
         } else if (step == 0) {
-          mutateGender(0);
+          mutateGender(null);
         }
       }
       setButtonNumber(null);

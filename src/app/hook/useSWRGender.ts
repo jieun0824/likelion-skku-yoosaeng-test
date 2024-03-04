@@ -8,8 +8,12 @@ export enum GenderType {
 
 export default function useSWRGender() {
   const { data: gender, mutate: mutateGender } = useImmutableSWR("gender", {
-    fallbackData: 0,
+    fallbackData: null,
   });
+
+  useEffect(() => {
+    console.log(gender);
+  }, [gender]);
 
   return [gender, mutateGender];
 }
