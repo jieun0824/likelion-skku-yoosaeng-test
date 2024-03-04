@@ -2,6 +2,7 @@
 import useSWRGender from "@/app/hook/useSWRGender";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import React from "react";
 import { useEffect } from "react";
 
 function KaKaoBtn({
@@ -61,7 +62,7 @@ function KaKaoBtn({
   );
 }
 
-export default function ResultComponent({
+function ResultComponent({
   data,
 }: {
   data: {
@@ -112,3 +113,5 @@ export default function ResultComponent({
     </div>
   );
 }
+
+export const MemoizedResultComponent = React.memo(ResultComponent);

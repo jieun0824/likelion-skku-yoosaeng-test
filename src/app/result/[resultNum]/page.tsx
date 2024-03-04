@@ -1,4 +1,4 @@
-import ResultComponent from "../_component/result-component";
+import { MemoizedResultComponent } from "../_component/result-component";
 
 export default async function ResultPage({
   params,
@@ -97,7 +97,7 @@ export default async function ResultPage({
 
   return (
     <div>
-      <ResultComponent data={result} />
+      <MemoizedResultComponent data={result} />
     </div>
   );
 }
