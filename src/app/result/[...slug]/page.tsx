@@ -1,9 +1,9 @@
-import ResultComponent from "../_component/result-component";
+import { MemoizedResultComponent } from "../_component/result-component";
 
 export default async function ResultPage({
   params,
 }: {
-  params: { resultNum: string };
+  params: { slug: string[] };
 }) {
   //imageUrl[0] = female , [1] = male
   const resultData = [
@@ -91,13 +91,11 @@ export default async function ResultPage({
     },
   ];
 
-  const result = resultData.find(
-    (result) => result.param === params.resultNum
-  )!;
+  const result = resultData.find((result) => result.param === params.slug[0])!;
 
   return (
     <div>
-      <ResultComponent data={result} />
+      <MemoizedResultComponent data={result} gender={params.slug[1]} />
     </div>
   );
 }

@@ -59,7 +59,9 @@ export default function TestComponent({
     }
     setTimeout(async () => {
       if (currentStep === data.length - 1) {
-        await judgeResult().then((result) => router.push(`/result/${result}`));
+        await judgeResult().then((result) =>
+          router.push(`/result/${result}/${gender}`)
+        );
       } else {
         //마지막 step 이 아니면
         setButtonNumber(null);

@@ -1,7 +1,8 @@
 "use client";
-import useSWRGender from "@/app/hook/useSWRGender";
+import useSWRGender, { GenderType } from "@/app/hook/useSWRGender";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import React from "react";
 import { useEffect } from "react";
 
 function KaKaoBtn({
@@ -61,8 +62,9 @@ function KaKaoBtn({
   );
 }
 
-export default function ResultComponent({
+function ResultComponent({
   data,
+  gender,
 }: {
   data: {
     param: string;
@@ -70,10 +72,10 @@ export default function ResultComponent({
     description: string;
     imageUrl: string[];
   };
+  gender: string;
 }) {
   const title = data.title.split("\n");
   const description = data.description.split("\n");
-  const [gender, mutateGender] = useSWRGender();
   return (
     <div className="flex flex-col justify-center items-center gap-14  ">
       <div className="text-xl text-center">나는 과거에 어떤 유생이었을까?</div>
@@ -92,7 +94,7 @@ export default function ResultComponent({
             ))}
           </div>
           <Image
-            src={data.imageUrl[gender]}
+            src={data.imageUrl[parseInt(gender)]}
             alt={data.param}
             width={300}
             height={300}
@@ -107,8 +109,10 @@ export default function ResultComponent({
       <KaKaoBtn
         param={data.param}
         item={title[title.length - 1]}
-        imageUrl={data.imageUrl[gender]}
+        imageUrl={data.imageUrl[parseInt(gender)]}
       />
     </div>
   );
 }
+
+export const MemoizedResultComponent = React.memo(ResultComponent);
