@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import StartButton from "./_component/start-button";
+import StartButton from "@/components/start-button";
 
 export default function MainPage() {
   return (
@@ -17,7 +17,7 @@ export default function MainPage() {
         height={300}
         className="border-none"
       />
-      <StartButton />
+      <StartButton text={"유생 테스트"} />
     </div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 import useSWRGender, { GenderType } from "@/app/hook/useSWRGender";
+import StartButton from "@/components/start-button";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import React from "react";
@@ -106,11 +107,17 @@ function ResultComponent({
           </div>
         </div>
       </div>
-      <KaKaoBtn
-        param={data.param}
-        item={title[title.length - 1]}
-        imageUrl={data.imageUrl[parseInt(gender)]}
-      />
+      <div className="flex flex-col justify-center items-center gap-4">
+        <KaKaoBtn
+          param={data.param}
+          item={title[title.length - 1]}
+          imageUrl={data.imageUrl[parseInt(gender)]}
+        />
+        <StartButton
+          text={"다시하기"}
+          className="bg-black text-white hover:bg-gray-400 shadow-lg shadow-white/5"
+        />
+      </div>
     </div>
   );
 }

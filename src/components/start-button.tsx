@@ -7,10 +7,17 @@ import useSWRNS from "@/app/hook/useSWRNS";
 import useSWRPrevButton from "@/app/hook/useSWRPrevButton";
 import useSWRTF from "@/app/hook/useSWRTF";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function StartButton() {
+export default function StartButton({
+  text,
+  className,
+}: {
+  text: string;
+  className?: string;
+}) {
   const [TF, mutateTF] = useSWRTF();
   const [NS, mutateNS] = useSWRNS();
   const [EI, mutateEI] = useSWREI();
@@ -20,7 +27,10 @@ export default function StartButton() {
   return (
     <Link href="/test">
       <Button
-        className="bg-pointColor hover:bg-pointColor/40 shadow-gray-600 text-black"
+        className={cn(
+          "bg-pointColor hover:bg-pointColor/40 shadow-gray-600 text-black",
+          className
+        )}
         onClick={() => {
           setTimeout(() => {
             mutateEI(0);
@@ -43,7 +53,7 @@ export default function StartButton() {
           }, 0);
         }}
       >
-        유생 테스트
+        {text}
       </Button>
     </Link>
   );
