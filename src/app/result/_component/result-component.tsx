@@ -1,6 +1,8 @@
 "use client";
-import useSWRGender from "@/app/hook/useSWRGender";
+import { GenderType } from "@/app/test/_component/test-component";
 import { Button } from "@/components/ui/button";
+import { getCookie } from "cookies-next";
+import { cookies } from "next/headers";
 import Image from "next/image";
 import React from "react";
 import { useEffect } from "react";
@@ -64,6 +66,7 @@ function KaKaoBtn({
 
 function ResultComponent({
   data,
+  gender,
 }: {
   data: {
     param: string;
@@ -71,10 +74,10 @@ function ResultComponent({
     description: string;
     imageUrl: string[];
   };
+  gender: GenderType;
 }) {
   const title = data.title.split("\n");
   const description = data.description.split("\n");
-  const [gender, mutateGender] = useSWRGender();
   return (
     <div className="flex flex-col justify-center items-center gap-14  ">
       <div className="text-xl text-center">나는 과거에 어떤 유생이었을까?</div>

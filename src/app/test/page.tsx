@@ -1,12 +1,6 @@
 import TestComponent from "./_component/test-component";
 
 export default async function TestPage() {
-  // const data = await fetch("http://localhost:3000/data/test.json", {
-  //   next: { revalidate: 60 },
-  // }).then((res) => res.json());
-
-  // console.log(data);
-
   const testData = [
     {
       id: 0,
@@ -19,7 +13,7 @@ export default async function TestPage() {
         "드디어 기다리고 기다리던 '고하노라'!\n고하노라 행진을 할 때 나는..?",
       answer: [
         "선두에서 뒤 유생 친구들을 진두지휘한다.",
-        "선두는 부담스러워~ ... 유생 친구들 사이에 \n섞여있는다.",
+        "눈에 띄지 않게 유생친구들 사이에 \n섞여있는다.",
       ],
     },
 

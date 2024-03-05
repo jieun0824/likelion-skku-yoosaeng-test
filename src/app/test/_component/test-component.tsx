@@ -1,15 +1,16 @@
 "use client";
 
+import useSWRCurrentStep from "@/app/hook/useSWRCurrenStep";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import useSWRCurrentStep from "@/app/hook/useSWRCurrenStep";
+import { getCookie, setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import useSWRPrevButton from "@/app/hook/useSWRPrevButton";
-import useSWRTF from "@/app/hook/useSWRTF";
-import useSWRNS from "@/app/hook/useSWRNS";
-import useSWREI from "@/app/hook/useSWREI";
-import useSWRGender, { GenderType } from "@/app/hook/useSWRGender";
+import { useEffect, useState } from "react";
+
+export enum GenderType {
+  male = 1,
+  female = 0,
+}
 
 type answerType = null | number;
 
@@ -18,19 +19,21 @@ export default function TestComponent({
 }: {
   data: { id: number; question: string; answer: string[] }[];
 }) {
-  const [TF, mutateTF] = useSWRTF();
-  const [NS, mutateNS] = useSWRNS();
-  const [EI, mutateEI] = useSWREI();
-  const [gender, mutateGender] = useSWRGender();
-
   const [currentStep, mutateCurrentStep] = useSWRCurrentStep();
   const [step, setStep] = useState(currentStep);
   const newQuestion = data[step].question.split("\n");
 
   //모든 선지 기억(이전 버튼 클릭 시 이전 선지 삭제)
-  const [prevButtonNumber, setPrevButtonNumber] = useSWRPrevButton();
+  //const [prevButtonNumber, setPrevButtonNumber] = useSWRPrevButton();
   //현재 선지 버튼
   const [buttonNumber, setButtonNumber] = useState<answerType>(null);
+  const prevButtonNumber: { [key: number]: answerType } | {} = JSON.parse(
+    getCookie("prevButtonNumber") || "{}"
+  );
+
+  useEffect(() => {
+    console.log(prevButtonNumber);
+  }, [prevButtonNumber]);
   const router = useRouter();
   const BtnClickHandler = (index: answerType) => {
     if (buttonNumber == index) {
@@ -43,22 +46,14 @@ export default function TestComponent({
     if (buttonNumber == null) {
       return;
     } //뒤로 넘어가지 않음
-    setPrevButtonNumber({ ...prevButtonNumber, [step]: buttonNumber }); //이전 선지로 저장
-    if (buttonNumber === 1) {
-      if ([1, 5, 8].includes(step)) {
-        mutateEI(EI + 1); //E 추가
-      } else if ([2, 4, 9].includes(step)) {
-        mutateNS(NS + 1); //S 추가
-      } else if ([3, 6, 7].includes(step)) {
-        mutateTF(TF + 1); //T 추가
-      } else if (step == 0) {
-        mutateGender(GenderType.male);
-      }
-    } else if (buttonNumber === 2 && step === 0) {
-      mutateGender(GenderType.female);
-    }
+    setCookie(
+      "prevButtonNumber",
+      JSON.stringify({ ...prevButtonNumber, [step]: buttonNumber })
+    ); //이전 선지로 저장
+
     setTimeout(async () => {
       if (currentStep === data.length - 1) {
+        //마지막스텝일시
         await judgeResult().then((result) => router.push(`/result/${result}`));
       } else {
         //마지막 step 이 아니면
@@ -69,7 +64,46 @@ export default function TestComponent({
     }, 300);
   };
 
+  // if (buttonNumber === 1) {
+  //   if ([1, 5, 8].includes(step)) {
+  //     mutateEI(EI + 1); //E 추가
+  //   } else if ([2, 4, 9].includes(step)) {
+  //     mutateNS(NS + 1); //S 추가
+  //   } else if ([3, 6, 7].includes(step)) {
+  //     mutateTF(TF + 1); //T 추가
+  //   } else if (step == 0) {
+  //     mutateGender(GenderType.male);
+  //   }
+  // } else if (buttonNumber === 2 && step === 0) {
+  //   mutateGender(GenderType.female);
+  // }
+
   const judgeResult = async () => {
+    let EI = 0;
+    let NS = 0;
+    let TF = 0;
+    let gender = 0;
+    Object.keys(prevButtonNumber).forEach((key) => {
+      //key -> step number
+      const intKey = parseInt(key);
+      const buttonType = prevButtonNumber[intKey];
+      if (intKey in [1, 5, 8] && buttonType === 1) {
+        EI++;
+        console.log("EI:", EI);
+      } else if (parseInt(key) in [2, 4, 9] && buttonType === 1) {
+        NS++;
+        console.log("NS", NS);
+      } else if (parseInt(key) in [3, 6, 7] && buttonType === 1) {
+        TF++;
+        console.log("TF", TF);
+      } else if (parseInt(key) === 0) {
+        if (buttonType === 1) {
+          gender = GenderType.male;
+        } else if (buttonType === 2) {
+          gender = GenderType.female;
+        }
+      }
+    });
     return new Promise((resolve) => {
       let result = "";
       if (EI >= 2) {
@@ -114,19 +148,11 @@ export default function TestComponent({
   const BackHandler = () => {
     setTimeout(() => {
       mutateCurrentStep(currentStep - 1); //이전스텝으로 변경
-      if (prevButtonNumber[currentStep] === 1) {
-        if ([1, 5, 8].includes(step)) {
-          mutateEI(EI - 1); //E 삭제
-        } else if ([2, 4, 9].includes(step)) {
-          mutateNS(NS - 1); //S REMOVE
-        } else if ([3, 6, 7].includes(step)) {
-          mutateTF(TF - 1); //T REMOVE
-        } else if (step == 0) {
-          mutateGender(null);
-        }
-      }
       setButtonNumber(null);
-      setPrevButtonNumber({ ...prevButtonNumber, [step]: null });
+      setCookie(
+        "prevButtonNumber",
+        JSON.stringify({ ...prevButtonNumber, [currentStep]: null })
+      );
       setStep(step - 1); //for rendering
     }, 300);
   };

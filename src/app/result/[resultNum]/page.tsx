@@ -1,3 +1,4 @@
+import { cookies } from "next/headers";
 import { MemoizedResultComponent } from "../_component/result-component";
 
 export default async function ResultPage({
@@ -6,6 +7,9 @@ export default async function ResultPage({
   params: { resultNum: string };
 }) {
   //imageUrl[0] = female , [1] = male
+  const cookieStore = cookies();
+  const gender = JSON.parse(cookieStore.get("prevButtonNumber")?.value!)[0] % 2;
+  console.log(gender);
   const resultData = [
     {
       param: "GQEWG",
@@ -97,7 +101,7 @@ export default async function ResultPage({
 
   return (
     <div>
-      <MemoizedResultComponent data={result} />
+      <MemoizedResultComponent data={result} gender={gender} />
     </div>
   );
 }
