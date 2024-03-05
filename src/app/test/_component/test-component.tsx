@@ -27,9 +27,7 @@ export default function TestComponent({
   //const [prevButtonNumber, setPrevButtonNumber] = useSWRPrevButton();
   //현재 선지 버튼
   const [buttonNumber, setButtonNumber] = useState<answerType>(null);
-  const prevButtonNumber: { [key: number]: answerType } | {} = JSON.parse(
-    getCookie("prevButtonNumber") || "{}"
-  );
+  const prevButtonNumber = JSON.parse(getCookie("prevButtonNumber") || "{}");
 
   useEffect(() => {
     console.log(prevButtonNumber);
