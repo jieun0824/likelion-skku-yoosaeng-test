@@ -1,36 +1,26 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## 멋쟁이 사자처럼 홍보용 유생테스트
 
-## Getting Started
+멋쟁이 사자처럼 12기 모집 홍보용으로 제작한 유생테스트입니다.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### [모바일 프리뷰]
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<img src="https://github.com/jieun0824/likelion-skku-yoosaeng-test/assets/86359553/e418b294-29a2-4713-af43-ca57ebea7c4b"/>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 사용 스택
 
-## Learn More
+- Next.js + typescript
+- tailwind css
+- SWR
 
-To learn more about Next.js, take a look at the following resources:
+- 이미지 생성 - chatGPT 생성형 ai 사용
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+### 이용 방법
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+유생 테스트를 통해 전생에 내가 어떤 유생 유형에 해당했는지를 확인해볼 수 있습니다.
+결과창은 카카오톡 공유하기 기능을 통해 공유가 가능합니다.
